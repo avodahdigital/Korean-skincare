@@ -311,6 +311,35 @@ canvas#canvas {
   max-width: 40vw;
 }
 
+/* Dark scrim behind text for readability over product */
+.section-content .section-inner {
+  position: relative;
+  padding: 2.5rem 2rem;
+}
+
+.section-content .section-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.7) 60%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  border-radius: 6px;
+  z-index: -1;
+}
+
+.section-cta .section-inner::before {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.75) 60%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
 /* Section typography */
 .section-label {
   display: inline-block;

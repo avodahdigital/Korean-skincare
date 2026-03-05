@@ -7,7 +7,10 @@
 
   const FRAME_COUNT = 121;
   const FRAME_SPEED = 2.0;
-  const IMAGE_SCALE = 0.85;
+  const IMAGE_SCALE = 0.62;
+
+  // Product horizontal offset: 0 = center, positive = right, negative = left
+  var productOffsetX = 0.25; // start in right third (25% of viewport width rightward)
 
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
@@ -48,12 +51,11 @@
     bgColor = "rgb(" + pixel[0] + "," + pixel[1] + "," + pixel[2] + ")";
   }
 
-  /* ---- Draw frame (padded cover mode) ---- */
+  /* ---- Draw frame (padded cover mode with horizontal offset) ---- */
   function drawFrame(index) {
     const img = frames[index];
     if (!img) return;
 
-    const dpr = window.devicePixelRatio || 1;
     const cw = window.innerWidth;
     const ch = window.innerHeight;
     const iw = img.naturalWidth;
@@ -61,7 +63,7 @@
     const scale = Math.max(cw / iw, ch / ih) * IMAGE_SCALE;
     const dw = iw * scale;
     const dh = ih * scale;
-    const dx = (cw - dw) / 2;
+    const dx = (cw - dw) / 2 + (productOffsetX * cw);
     const dy = (ch - dh) / 2;
 
     ctx.fillStyle = bgColor;
@@ -425,6 +427,74 @@
     });
   }
 
+  /* ---- Product Position Shifting ---- */
+  function initProductShift() {
+    // Defines where the product sits for each scroll range
+    // right-aligned text → product shifts LEFT, left-aligned text → product shifts RIGHT
+    var zones = [];
+    document.querySelectorAll(".scroll-section").forEach(function (s) {
+      var enter = parseFloat(s.dataset.enter) / 100;
+      var leave = parseFloat(s.dataset.leave) / 100;
+      var isRight = s.classList.contains("align-right");
+      var isStats = s.classList.contains("section-stats");
+      // right-aligned text = product goes left (-0.20), left-aligned = product goes right (0.25), stats = center (0)
+      var target = isStats ? 0 : (isRight ? -0.20 : 0.25);
+      zones.push({ enter: enter, leave: leave, offset: target });
+    });
+
+    // Ease function for buttery transitions
+    function easeInOut(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    ScrollTrigger.create({
+      trigger: scrollContainer,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true,
+      onUpdate: function (self) {
+        var p = self.progress;
+        var targetOffset = 0.25; // default: right third
+
+        // Find which zone we're in or between
+        for (var i = 0; i < zones.length; i++) {
+          var z = zones[i];
+          var prevOffset = i > 0 ? zones[i - 1].offset : 0.25;
+
+          // Inside a zone — hold position
+          if (p >= z.enter && p <= z.leave) {
+            targetOffset = z.offset;
+            break;
+          }
+
+          // In the gap BETWEEN two zones — drift smoothly across the entire gap
+          if (i > 0 && p > zones[i - 1].leave && p < z.enter) {
+            var t = (p - zones[i - 1].leave) / (z.enter - zones[i - 1].leave);
+            targetOffset = prevOffset + (z.offset - prevOffset) * easeInOut(t);
+            break;
+          }
+
+          // Before the very first zone — drift from default into first zone
+          if (i === 0 && p < z.enter) {
+            var leadIn = Math.min(z.enter, 0.08); // use up to 8% scroll for lead-in
+            if (p >= z.enter - leadIn) {
+              var t2 = (p - (z.enter - leadIn)) / leadIn;
+              targetOffset = 0.25 + (z.offset - 0.25) * easeInOut(t2);
+            }
+            break;
+          }
+        }
+
+        // Gentle lerp for frame-level smoothness (lower = smoother drift)
+        productOffsetX += (targetOffset - productOffsetX) * 0.06;
+
+        if (currentFrame >= 0) {
+          requestAnimationFrame(function () { drawFrame(currentFrame); });
+        }
+      },
+    });
+  }
+
   /* ---- Init Everything ---- */
   function initSite() {
     gsap.registerPlugin(ScrollTrigger);
@@ -437,6 +507,7 @@
     initMarquee();
     initCounters();
 
+    initProductShift();
     document.querySelectorAll(".scroll-section").forEach(setupSectionAnimation);
 
     // Recalculate on resize
