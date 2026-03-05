@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Seoul — Your Glow, Your Rules</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Loader -->
+  <div id="loader">
+    <div class="loader-brand">Aura Seoul</div>
+    <div class="loader-track">
+      <div id="loader-bar"></div>
+    </div>
+    <div id="loader-percent">0%</div>
+  </div>
+
+  <!-- Fixed Header -->
+  <header class="site-header">
+    <nav>
+      <div class="nav-logo">Aura Seoul</div>
+      <div class="nav-links">
+        <a href="#ingredients">Ingredients</a>
+        <a href="#routine">Routine</a>
+        <a href="#results">Results</a>
+        <a href="#shop" class="nav-cta">Shop Now</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero: Standalone 100vh -->
+  <section class="hero-standalone">
+    <div class="hero-inner align-left">
+      <span class="section-label">Aura Seoul Luminance Serum</span>
+      <h1 class="hero-heading">
+        <span>Your</span> <span>glow</span> <span>was</span> <span>never</span> <span>missing.</span>
+        <br>
+        <span>It</span> <span>was</span> <span>just</span> <span>waiting.</span>
+      </h1>
+      <p class="hero-tagline">A Korean-science serum crafted for melanin-rich skin that battles humidity, hyperpigmentation, and beauty standards that were never made for you.</p>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll to discover</span>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M10 3v14M4 11l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Canvas -->
+  <div class="canvas-wrap">
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <!-- Dark Overlay -->
+  <div id="dark-overlay"></div>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap" data-scroll-speed="-25" data-enter="15" data-leave="85">
+    <div class="marquee-text">Centella + Niacinamide + Rice Water &mdash; Centella + Niacinamide + Rice Water &mdash; Centella + Niacinamide + Rice Water &mdash;</div>
+  </div>
+
+  <!-- Scroll Container -->
+  <div id="scroll-container">
+
+    <!-- Section 1: The Problem -->
+    <section class="scroll-section section-content align-left"
+             data-enter="14" data-leave="28" data-animation="slide-left">
+      <div class="section-inner">
+        <span class="section-label">001 / The Problem</span>
+        <h2 class="section-heading">Humidity fights you.<br>Mainstream brands ignore you.</h2>
+        <p class="section-body">Dark spots that deepen in the rain season. Oiliness that won't quit by noon. Products made for skin that doesn't look like yours. You deserve formulas that understand melanin-rich skin in tropical humidity &mdash; not afterthoughts with "universal" claims.</p>
+      </div>
+    </section>
+
+    <!-- Section 2: The Solution -->
+    <section class="scroll-section section-content align-right"
+             data-enter="28" data-leave="44" data-animation="slide-right" id="ingredients">
+      <div class="section-inner">
+        <span class="section-label">002 / The Solution</span>
+        <h2 class="section-heading">Heritage meets science.</h2>
+        <p class="section-body"><strong>Centella Asiatica</strong> &mdash; used for centuries across Asia to calm and heal. Repairs your moisture barrier against humidity damage.</p>
+        <p class="section-body"><strong>5% Niacinamide</strong> &mdash; clinically proven to fade hyperpigmentation and control oil without stripping your skin's natural balance.</p>
+        <p class="section-body"><strong>Fermented Rice Water</strong> &mdash; a South &amp; East Asian beauty secret. Brightens uneven tone and delivers that lit-from-within glow your amma always had.</p>
+      </div>
+    </section>
+
+    <!-- Section 3: How It Works -->
+    <section class="scroll-section section-content align-left"
+             data-enter="44" data-leave="58" data-animation="fade-up" id="routine">
+      <div class="section-inner">
+        <span class="section-label">003 / Your Ritual</span>
+        <h2 class="section-heading">Three steps.<br>Two minutes.<br>One glow.</h2>
+        <p class="section-body"><strong>Step 1: Cleanse</strong> &mdash; Start with clean, damp skin after your usual cleanser.</p>
+        <p class="section-body"><strong>Step 2: Apply</strong> &mdash; 3-4 drops warmed between palms, pressed gently into cheeks, forehead, and chin. Never rub.</p>
+        <p class="section-body"><strong>Step 3: Seal</strong> &mdash; Follow with your moisturiser. The serum locks actives underneath, working for 8 hours straight.</p>
+      </div>
+    </section>
+
+    <!-- Section 4: Stats -->
+    <section class="scroll-section section-stats"
+             data-enter="58" data-leave="74" data-animation="stagger-up" id="results">
+      <div class="stats-grid">
+        <div class="stat">
+          <span class="stat-number" data-value="94" data-decimals="0">0</span>
+          <span class="stat-suffix">%</span>
+          <span class="stat-label">saw brighter, more even tone in 4 weeks</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number" data-value="87" data-decimals="0">0</span>
+          <span class="stat-suffix">%</span>
+          <span class="stat-label">reported reduced oiliness by midday</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number" data-value="4.8" data-decimals="1">0</span>
+          <span class="stat-suffix">/5</span>
+          <span class="stat-label">average rating from 2,400+ reviews</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number" data-value="8" data-decimals="0">0</span>
+          <span class="stat-suffix">hrs</span>
+          <span class="stat-label">of active hydration per application</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: CTA -->
+    <section class="scroll-section section-cta align-left"
+             data-enter="76" data-leave="92" data-animation="scale-up" data-persist="true" id="shop">
+      <div class="section-inner">
+        <span class="section-label">005 / Start Today</span>
+        <h2 class="section-heading">Your skin.<br>Your glow.<br>Your rules.</h2>
+        <p class="section-body">Join 12,000+ women across South Asia who stopped waiting for brands to see them &mdash; and chose Aura Seoul instead.</p>
+        <a href="#" class="cta-button">Start Your Routine</a>
+        <p class="section-note">Free shipping across Bangladesh. 30-day glow guarantee.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
